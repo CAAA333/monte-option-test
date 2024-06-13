@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Monte Carlo Simulation for European Options</title>
+    <style>
+      .container {
+        display: flex;
+      }
+      .column {
+        flex: 50%;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Monte Carlo Simulation for European Call and Put Options</h1>
+    <div class="container">
+      <div class="column">
+        <h2>Option Inputs</h2>
+        <form method="post">
+          <label for="ticker">Cryptocurrency Ticker:</label><br />
+          <input
+            type="text"
+            id="ticker"
+            name="ticker"
+            value="{{ ticker }}"
+          /><br /><br />
+          <input
+            type="submit"
+            name="update_ticker"
+            value="Update Ticker"
+          /><br /><br />
+          <label for="K">Strike Price (K):</label><br />
+          <input type="text" id="K" name="K" value="{{ Close }}" /><br /><br />
+          <label for="T">Time to Maturity in Years (T):</label><br />
+          <input type="text" id="T" name="T" value="{{ years }}" /><br /><br />
+          <label for="r">Risk-free Rate (r):</label><br />
+          <input type="text" id="r" name="r" value="{{ rate }}" /><br /><br />
+          <label for="sigma">Volatility (σ):</label><br />
+          <input
+            type="text"
+            id="sigma"
+            name="sigma"
+            value="{{ sigma }}"
+          /><br /><br />
+          <label for="skewness">Skewness:</label><br />
+          <input
+            type="text"
+            id="skewness"
+            name="skewness"
+            value="{{ skewness }}"
+          /><br /><br />
+          <label for="kurtosis">Kurtosis:</label><br />
+          <input
+            type="text"
+            id="kurtosis"
+            name="kurtosis"
+            value="{{ kurtosis }}"
+          /><br /><br />
+          <label for="num_simulations">Number of Simulations:</label><br />
+          <input
+            type="text"
+            id="num_simulations"
+            name="num_simulations"
+            value="10000"
+          /><br /><br />
+          <label for="num_steps">Number of Steps:</label><br />
+          <input
+            type="text"
+            id="num_steps"
+            name="num_steps"
+            value="252"
+          /><br /><br />
+          <input type="submit" value="Run Simulation" />
+        </form>
+      </div>
+      <div class="column">
+        <h2>Historical</h2>
+        <p>Cryptocurrency Ticker: {{ ticker }}</p>
+        <p>Latest price: {{ Close }}</p>
+        <p>Time in Years: {{ years }}</p>
+        <p>Risk-free Rate: {{ rate }}</p>
+        <p>Volatility (σ): {{ sigma }}</p>
+        <p>Skewness: {{ skewness }}</p>
+        <p>Kurtosis: {{ kurtosis }}</p>
+      </div>
+    </div>
+
+    {% if call_option_price and put_option_price %}
+    <h2>
+      The estimated price of the European call option is: ${{ call_option_price
+      }}
+    </h2>
+    <h2>
+      The estimated price of the European put option is: ${{ put_option_price }}
+    </h2>
+    <img src="{{ plot_url }}" alt="Monte Carlo Simulation Plot" />
+    {% endif %}
+  </body>
+</html>
